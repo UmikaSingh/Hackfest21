@@ -1,0 +1,23 @@
+class Solution {
+public:
+    struct node{
+        int val=-1;
+    };
+    
+    int lengthOfLongestSubstring(string s) {
+        // map= value->index
+        int maxLen=0,n=s.size();
+        unordered_map<char,node> umap;
+        for(int right=0,left=0;right<n;right++){
+            //update the left pointer
+            if(umap[s[right]].val!=-1){
+                left=max(left,umap[s[right]].val+1);
+            }
+            //update the map
+            umap[s[right]].val=right;
+            //calc length till now- local len of window, global len
+            maxLen=max(maxLen,right-left+1);
+        }
+        return maxLen;
+    }
+};
