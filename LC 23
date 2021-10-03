@@ -1,0 +1,29 @@
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        priority_queue<int,vector<int>,greater<int>> pq;
+        int n=lists.size();
+        
+        //creating min heap
+        for(int i=0;i<n;i++){
+            ListNode* tmp=lists[i];
+            while(tmp){
+                pq.push(tmp->val);
+                tmp=tmp->next;
+            }
+        }
+        
+        //create a res list
+        if(pq.empty()) return NULL;
+        ListNode* root=new ListNode(pq.top());
+        pq.pop();
+        ListNode* res=root;
+        while(!pq.empty()){
+            ListNode *tmp=new ListNode(pq.top());
+            pq.pop();
+            root->next=tmp;
+            root=root->next;
+        }
+        return res;
+    }
+};
